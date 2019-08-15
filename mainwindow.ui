@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>790</width>
+    <height>475</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>AutoHeader</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>logo.icns</normaloff>logo.icns</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="Germany"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="2">
+     <widget class="QPushButton" name="selectButton">
+      <property name="toolTip">
+       <string extracomment="Select the files you want to edit"/>
+      </property>
+      <property name="text">
+       <string>Select files</string>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QPlainTextEdit" name="fileEditor">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius:10px; background-color: palette(base);</string>
+       </property>
+       <property name="inputMethodHints">
+        <set>Qt::ImhMultiLine|Qt::ImhPreferLatin</set>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="fileListWidget">
+       <property name="styleSheet">
+        <string notr="true"> border-radius:10px; background-color: palette(base);</string>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="startButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Start</string>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="commentStyleComboBox">
+      <item>
+       <property name="text">
+        <string>--Auto detect file type (BETA)-- </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Ada (--)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>AppleScript ((**))</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>BASIC (REM)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>C (/**/,//)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>C++ (/**/, //)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>C# (/**/, //)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>ColdFusion (&lt;!------&gt;</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Fortran IV (C)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Haskell ({--}, --)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Java (/**/, //)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>JavaScript (/**/, //)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Lua (--, --[[]])</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>MATLAB (% , %{%})</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Pascal ((**))</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Perl (#)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>PHP (//, /**/)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>PowerShell (#, &lt;##&gt;)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Python (#)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Ruby (#, =begin =end)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SQL (--)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Swift (/**/, //)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>XML (&lt;!----&gt;)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>HTML (&lt;!----&gt;)</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QComboBox" name="templateComboBox">
+      <property name="currentText">
+       <string>--Select Template--</string>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+      </property>
+      <item>
+       <property name="text">
+        <string>--Select Template--</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Standard header</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Standard header (alternative)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>See LICENSE refrence</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Import header</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QCheckBox" name="safeModeCheckBox">
+      <property name="text">
+       <string>Safe-Mode</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>790</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
