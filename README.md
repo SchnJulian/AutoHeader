@@ -36,27 +36,5 @@ You can decide if AutoHeader overrides your files with the new version that incl
 ![DarkthemeVLightTheme](/Screenshots/ScreenshotDarkTheme.png)
 
 ## File-extensions
-| ﻿Language    |        |        |               |       |      |      |
-|-------------|--------|--------|---------------|-------|------|------|
-| Ada         | .ada   | .ads   |               |       |      |      |
-| AppleScript | .cpt   | .cptd  | .applescript  |       |      |      |
-| C           | .c     | .h     |               |       |      |      |
-| C++         | .cc    | .cpp   | .cxx          | .hpp  | .hxx |      |
-| C#          | .cs    |        |               |       |      |      |
-| ColdFusion  | .cfm   | .cfc   |               |       |      |      |
-| Fortran IV  | .f     | .for   | .f90          |       |      |      |
-| Haskell     | .hs    | .lhs   |               |       |      |      |
-| HTML        | .html  |        |               |       |      |      |
-| Java        | .java  |        |               |       |      |      |
-| JavaScript  | .js    | .mjs   |               |       |      |      |
-| Lua         | .lua   |        |               |       |      |      |
-| MATLAB      | .m     |        |               |       |      |      |
-| Pascal      | .pp    | .pas   |               |       |      |      |
-| Perl        | .pl    | .pm    | .xs           | .t    | .pod |      |
-| PHP         | .php   | .phtml | .php(3,4,5,7) | .phps | .pht |      |
-| Powershell  | .ps1   |        |               |       |      |      |
-| Python      | .py    | .yc    | .pyd          | .pyo  | .pyw | .pyz |
-| Ruby        | .rb    |        |               |       |      |      |
-| SQL         | .sql   |        |               |       |      |      |
-| Swift       | .swift |        |               |       |      |      |
-| XML         | .xml   |        |               |       |      |      |
+
+![FILEEXTENSION](/Screenshots/fileExtensions.png)
