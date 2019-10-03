@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (C) 2019 Julian Schnabel - julian schnabel@outlook.com
 
 This file is part of AutoHeader. (https://github.com/SchnJulian/AutoHeader)
@@ -21,6 +21,7 @@ AutoHeader is licensed under GPL v. 3. See LICENSE for further information. */
 #include "header.h"
 #include "language.h"
 #include "templates.h"
+#include "userdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -41,7 +42,7 @@ class MainWindow : public QMainWindow {
 
  public:
   explicit MainWindow(QWidget* parent = nullptr);
-  ~MainWindow();
+  ~MainWindow() override;
 
  private slots:
   void on_selectButton_clicked();
@@ -56,11 +57,11 @@ class MainWindow : public QMainWindow {
   void importTemplate();
   void saveToFile();
   void save();
+  void createUser();
   void on_fileListWidget_itemSelectionChanged();
   void on_startButton_clicked();
-  void on_commentStyleComboBox_activated(int index);
-
   void on_safeModeCheckBox_stateChanged(int arg1);
+  void on_forceSingleLine_stateChanged(int arg1);
 
  private:
   Ui::MainWindow* ui;
@@ -73,6 +74,7 @@ class MainWindow : public QMainWindow {
   QAction* importTemplateAction{};
   QAction* copyheaderAction{};
   QAction* saveAction{};
+  QAction* createUserAction{};
 #pragma endregion Actions
 
 #pragma region Menus
@@ -89,7 +91,7 @@ class MainWindow : public QMainWindow {
   void initMenu();
   void initExtensions();
   void readFileList();
-  void fillFileList(QStringList files);
+  void fillFileList(const QStringList& files);
   void selectLanguageFromIndex(int index);
   void readTemplate(const QString& path);
   bool checkMIME(const QString& path);  // Read the MIME-Type to determine
@@ -99,6 +101,7 @@ class MainWindow : public QMainWindow {
   void warning();
   void enableUi();
   void disableUi();
+
 #pragma endregion auxiliary - functions
   bool safeMode = false;
   QString commentHeader(
@@ -116,8 +119,8 @@ class MainWindow : public QMainWindow {
   QStringList fileNameList;
   std::vector<std::pair<QString, State>> status;
   Header header;
-  void processFiles();
-  void processFilesSafeMode();
+  bool processFiles();
+  bool processFilesSafeMode();
 };
 
 #endif  // MAINWINDOW_H

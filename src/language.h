@@ -25,11 +25,11 @@ int languageID{};    // Language ID (see mainwindow.cpp -> setupLanguages) user
 public:
 Language();
 ~Language();
-QStringList getSingleLine() const;
+[[nodiscard]] QStringList getSingleLine() const;
 void setSingleLine(const QStringList& value);
-QStringList getMultiLine() const;
+[[nodiscard]] QStringList getMultiLine() const;
 void setMultiLine(const QStringList& value);
-int getLanguageID() const;
+[[nodiscard]] int getLanguageID() const;
 void setLanguageID(int value);
 };
 }  // namespace Language

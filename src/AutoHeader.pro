@@ -12,14 +12,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         header.cpp \
-        language.cpp
+        language.cpp \
+        userdialog.cpp
 HEADERS += \
         mainwindow.h \
         header.h \
         templates.h \
-        language.h
+        language.h \
+        userdialog.h
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        userdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -27,4 +30,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    logo.icns
+    logo.icns \
+    text-document.png
