@@ -1,14 +1,14 @@
-/*
-Copyright (C) 2019 Julian Schnabel - julian schnabel@outlook.com
-
-This file is part of AutoHeader. (https://github.com/SchnJulian/AutoHeader)
-
-AutoHeader is licensed under GPL v. 3. See LICENSE for further information. */
-
 #include "header.h"
 
 Header::Header() = default;
 Header::~Header() = default;
+Header::Header(const Header& old_obj) {
+  this->content = old_obj.content;
+  this->autoDetect = old_obj.autoDetect;
+  this->forceSingleLine = old_obj.forceSingleLine;
+  this->user = old_obj.user;
+  this->multiLine = old_obj.multiLine;
+}
 QString Header::getContent() const { return content; }
 QString Header::getParsedContent() {
   this->parse();
@@ -44,7 +44,7 @@ void Header::readUser(const QString& path) {
     QStringList wordList;
     QByteArray line = file.readLine();
     while (!file.atEnd()) {
-       line = file.readLine();
+      line = file.readLine();
       wordList.append(line.split(',').at(1));
     }
     user.fullName = wordList.at(0).simplified();

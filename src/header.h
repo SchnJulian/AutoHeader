@@ -1,10 +1,3 @@
-/*
-Copyright (C) 2019 Julian Schnabel - julian schnabel@outlook.com
-
-This file is part of AutoHeader. (https://github.com/SchnJulian/AutoHeader)
-
-AutoHeader is licensed under GPL v. 3. See LICENSE for further information. */
-
 #ifndef HEADER_H
 #define HEADER_H
 
@@ -19,6 +12,8 @@ class Header {
  public:
   Header();
   ~Header();
+  Header (const Header &old_obj);
+
   bool multiLine{};        // Multi-line-comment or single-line-comment
   bool autoDetect = true;  // AutoDetect language
   bool forceSingleLine{};
