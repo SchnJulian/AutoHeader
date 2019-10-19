@@ -1,3 +1,13 @@
+// 
+// Copyright (C) 2019 Julian Schnabel
+// julian-schnabel@posteo.de github.com/SchnJulian
+// 
+// This file is part of AutoHeader.
+// 
+// AutoHeader can not be copied and/or distributed without the express
+// permission of Julian Schnabel
+
+
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
 

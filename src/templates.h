@@ -10,7 +10,7 @@ Copyright (C) <year> <name>
 
 This file is part of PROJECT.
 
-PROJECT can not be copied and/or distributed without the express
+PROJECT must not be copied and/or distributed without the express
 permission of <name>
 )";
 
