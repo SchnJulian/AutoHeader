@@ -26,7 +26,7 @@ AutoHeader is a tool to add a „license-header“ to your projects. Adding each
  * XML
 
 ## Reliability
-After every execution you'll get a report .csv file, where every file is listed with a status, that helps you to determine wether the file was edited or skipped, because it had the wrong format (e.g. Images etc.).
+After every execution you'll get a report .csv file, where every file is listed with a status, that helps you to determine wether the file was edited or skipped, because it had the wrong format (e.g. Images etc.)..
 
 ## Safe-mode
 You can decide if AutoHeader overrides your files with the new version that includes the header or creates a folder with the edited files and keeps the old ones.
