@@ -1,7 +1,7 @@
 <img src="/Screenshots/logoPrev.png" align="right"
      title="AutoHeader Icon by Julian Schnabel" width="120" height="120">
 
-## Tired of added your source-code header one by one to your projects?
+## Tired of adding your source-code header one by one to your projects?
 ![How it works](/Screenshots/Howitworks.png)
 
 
