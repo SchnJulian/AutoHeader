@@ -10,9 +10,10 @@ AutoHeader is a tool to add a „license-header“ to your projects. Adding each
 
 ****
 ## Download
-
 * [**Download the latest version (1.2)**](https://github.com/SchnJulian/AutoHeader/releases/download/1.2/AutoHeader.app.zip)
 * [Download the source code](https://github.com/SchnJulian/AutoHeader/archive/master.zip)
+
+![GitHub Releases](https://img.shields.io/github/downloads/schnjulian/autoheader/1.2/total)
 
 ## Language support
  * Ada
