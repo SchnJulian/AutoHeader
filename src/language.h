@@ -1,11 +1,13 @@
 // 
 // Copyright (C) 2019 Julian Schnabel
-// julian-schnabel@posteo.de github.com/SchnJulian
+// julian-schnabel@posteo.de www.github.com/SchnJulian
 // 
 // This file is part of AutoHeader.
 // 
-// AutoHeader can not be copied and/or distributed without the express
-// permission of Julian Schnabel
+// AutoHeader must not be copied and/or distributed without the express
+// permission of Julian Schnabel.
+// 
+// 27.10.2019
 
 
 #ifndef LANGUAGE_H

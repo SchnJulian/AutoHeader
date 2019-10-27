@@ -1,3 +1,15 @@
+// 
+// Copyright (C) 2019 Julian Schnabel
+// julian-schnabel@posteo.de www.github.com/SchnJulian
+// 
+// This file is part of AutoHeader.
+// 
+// AutoHeader must not be copied and/or distributed without the express
+// permission of Julian Schnabel.
+// 
+// 27.10.2019
+
+
 #include "userdialog.h"
 #include <QDebug>
 #include "ui_userdialog.h"
@@ -12,9 +24,7 @@ UserDialog::UserDialog(QWidget *parent)
   ui->githubEdit->setText(user.github);
   ui->LicenseEdit->setText(user.license);
 }
-
 UserDialog::~UserDialog() { delete ui; }
-
 void UserDialog::readUser(const QString &path) {
   QFile file(path);
   if (file.open(QIODevice::ReadOnly)) {
@@ -30,13 +40,10 @@ void UserDialog::readUser(const QString &path) {
       user.organization = wordList.at(2).simplified();
       user.github = wordList.at(3).simplified();
       user.license = wordList.at(4).simplified();
-    } catch (...) {
-    }
-
+    } catch (...) {}
     file.close();
   }
 }
-
 void UserDialog::createFile(const QString &path) {
   QFile file(path);
   if (file.open(QIODevice::WriteOnly)) {
@@ -58,23 +65,18 @@ void UserDialog::createFile(const QString &path) {
   }
   file.close();
 }
-
 void UserDialog::on_fullNameEdit_textChanged(const QString &arg1) {
   user.fullName = arg1;
 }
-
 void UserDialog::on_emailEdit_textChanged(const QString &arg1) {
   user.email = arg1;
 }
-
 void UserDialog::on_OrganizationEdit_textChanged(const QString &arg1) {
   user.organization = arg1;
 }
-
 void UserDialog::on_githubEdit_textChanged(const QString &arg1) {
   user.github = arg1;
 }
-
 void UserDialog::on_LicenseEdit_textChanged(const QString &arg1) {
   user.license = arg1;
 }

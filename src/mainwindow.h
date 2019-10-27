@@ -1,3 +1,14 @@
+// 
+// Copyright (C) 2019 Julian Schnabel
+// julian-schnabel@posteo.de www.github.com/SchnJulian
+// 
+// This file is part of AutoHeader.
+// 
+// AutoHeader must not be copied and/or distributed without the express
+// permission of Julian Schnabel.
+// 
+// 27.10.2019
+
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -6,6 +17,7 @@
 #include <QFileDialog>
 #include <QListWidgetItem>
 #include <QMainWindow>
+#include <QInputDialog>
 #include <QMessageBox>
 #include <QMimeDatabase>
 #include <QMimeType>
@@ -17,13 +29,14 @@
 #include "templates.h"
 #include "userdialog.h"
 
+
 namespace Ui {
 class MainWindow;
 }
 
 class MainWindow : public QMainWindow {
   // Error-codes for the results to show why a file could not be used
-  enum State : int {
+  enum STATE : int {
     GOOD = 0,
     READONLY = 1,
     WRITEONLY = 2,
@@ -39,10 +52,17 @@ class MainWindow : public QMainWindow {
   ~MainWindow() override;
 
  private slots:
+#pragma region UI_events
   void on_selectButton_clicked();
   void on_fileEditor_textChanged();
   void on_templateComboBox_activated(int index);
   void on_fileListWidget_itemDoubleClicked(QListWidgetItem* item);
+  void on_fileListWidget_itemSelectionChanged();
+  void on_startButton_clicked();
+  void on_safeModeCheckBox_stateChanged(int arg1);
+  void on_forceSingleLine_stateChanged(int arg1);
+#pragma endregion UI_events
+
   void deleteItem();
   void selectFiles();
   void clearFileEditor();
@@ -52,12 +72,8 @@ class MainWindow : public QMainWindow {
   void saveToFile();
   void save();
   void createUser();
-  void on_fileListWidget_itemSelectionChanged();
-  void on_startButton_clicked();
-  void on_safeModeCheckBox_stateChanged(int arg1);
-  void on_forceSingleLine_stateChanged(int arg1);
-
-  void on_removeLinesButton_clicked();
+  void delegateDeleteHeader();
+  void delegateDeleteHeaderSafeMode();
 
 private:
   Ui::MainWindow* ui;
@@ -71,6 +87,8 @@ private:
   QAction* copyheaderAction{};
   QAction* saveAction{};
   QAction* createUserAction{};
+  QAction* deleteHeaderAction{};
+  QAction* deleteHeaderSafeModeAction{};
 #pragma endregion Actions
 
 #pragma region Menus
@@ -98,6 +116,7 @@ private:
   void enableUi();
   void disableUi();
   bool deleteHeader(int lineCount);
+  bool deleteHeaderSafeMode(int lineCount);
 #pragma endregion auxiliary - functions
   bool safeMode = false;
   QString commentHeader(
@@ -113,7 +132,7 @@ private:
   QString currentHeaderPath;
   QDir currentDirectory;
   QStringList fileNameList;
-  std::vector<std::pair<QString, State>> status;
+  std::vector<std::pair<QString, STATE>> status;
   Header header;
   bool processFiles();
   bool processFilesSafeMode();

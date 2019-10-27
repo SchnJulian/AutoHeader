@@ -5,7 +5,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = AutoHeader
 TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
-CONFIG += c++17
+CONFIG += \
+        c++17 \
+        sdk_no_version_check
+
 ICON = logo.icns
 
 SOURCES += \

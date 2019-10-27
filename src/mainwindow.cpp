@@ -1,8 +1,20 @@
+// 
+// Copyright (C) 2019 Julian Schnabel
+// julian-schnabel@posteo.de www.github.com/SchnJulian
+// 
+// This file is part of AutoHeader.
+// 
+// AutoHeader must not be copied and/or distributed without the express
+// permission of Julian Schnabel.
+// 
+// 27.10.2019
+
+
 #include "mainwindow.h"
 #include <QDebug>
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget* parent)
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   header.autoDetect = true;
@@ -14,11 +26,11 @@ MainWindow::MainWindow(QWidget* parent)
 }
 MainWindow::~MainWindow() { delete ui; }
 void MainWindow::initComboBox() {
-  auto* model =
-      qobject_cast<QStandardItemModel*>(ui->templateComboBox->model());
+  auto *model =
+      qobject_cast<QStandardItemModel *>(ui->templateComboBox->model());
   QModelIndex firstIndex = model->index(0, ui->templateComboBox->modelColumn(),
                                         ui->templateComboBox->rootModelIndex());
-  QStandardItem* firstItem = model->itemFromIndex(firstIndex);
+  QStandardItem *firstItem = model->itemFromIndex(firstIndex);
 
   firstItem->setSelectable(false);
 }
@@ -268,9 +280,24 @@ void MainWindow::initMenu() {
   connect(createUserAction, &QAction::triggered, this, &MainWindow::createUser);
   createUserAction->setEnabled(true);
 
+  deleteHeaderAction = new QAction(tr("&Remove header"), this);
+  deleteHeaderAction->setStatusTip(tr("Remove header from selected files"));
+  connect(deleteHeaderAction, &QAction::triggered, this,
+          &MainWindow::delegateDeleteHeader);
+  deleteHeaderAction->setEnabled(true);
+
+  deleteHeaderSafeModeAction = new QAction(tr("&Remove header safely"), this);
+  deleteHeaderSafeModeAction->setStatusTip(
+      tr("Remove header from selected files"));
+  connect(deleteHeaderSafeModeAction, &QAction::triggered, this,
+          &MainWindow::deleteHeaderSafeMode);
+  deleteHeaderSafeModeAction->setEnabled(true);
+
   fileMenu = menuBar()->addMenu(tr("File"));
   fileMenu->addAction(selectFilesAction);
   fileMenu->addSeparator();
+  fileMenu->addAction(deleteHeaderAction);
+  fileMenu->addAction(deleteHeaderSafeModeAction);
   deleteMenu = fileMenu->addMenu(tr("Remove files"));
   deleteMenu->addAction(deleteFilesAction);
   deleteMenu->addAction(deleteAllFilesAction);
@@ -288,8 +315,8 @@ void MainWindow::initMenu() {
   helpMenu->addAction(createUserAction);
 }
 
-QString MainWindow::commentHeader(const QString& header,
-                                  const Language::Language& language) {
+QString MainWindow::commentHeader(const QString &header,
+                                  const Language::Language &language) {
   if (this->header.forceSingleLine) {
     return commentHeaderSingleLine(language);
   }
@@ -300,7 +327,7 @@ QString MainWindow::commentHeader(const QString& header,
 }
 
 QString MainWindow::commentHeaderSingleLine(
-    const Language::Language& language) {
+    const Language::Language &language) {
   QString temp = header.getParsedContent();
   QString line;
   QString final;
@@ -318,7 +345,7 @@ QString MainWindow::commentHeaderSingleLine(
   }
   return final;
 }
-QString MainWindow::commentHeaderMultiLine(const Language::Language& language) {
+QString MainWindow::commentHeaderMultiLine(const Language::Language &language) {
   QString temp = header.getParsedContent();
   temp.insert(0, language.getMultiLine()[0] + " ");
   temp.append(" " + language.getMultiLine()[1]);
@@ -357,13 +384,35 @@ void MainWindow::save() {
   unsaved = false;
 }
 
+void MainWindow::delegateDeleteHeader() {
+  bool ok;
+  int num = QInputDialog::getInt(this, tr("Delete header from files"),
+                                 tr("How many lines to you want to remove?"),
+                                 header.getParsedContent().count('\n'), 1,
+                                 214783647, 1, &ok);
+  if (ok && num >= 1) {
+    deleteHeader(num);
+  }
+}
+
+void MainWindow::delegateDeleteHeaderSafeMode() {
+  bool ok;
+  int num = QInputDialog::getInt(this, tr("Delete header from files"),
+                                 tr("How many lines to you want to remove?"),
+                                 header.getParsedContent().count('\n'), 1,
+                                 214783647, 1, &ok);
+  if (ok && num >= 1) {
+    deleteHeaderSafeMode(num);
+  }
+}
+
 void MainWindow::createUser() {
-  auto* u = new UserDialog;
+  auto *u = new UserDialog;
   u->show();
 }
 
 void MainWindow::copyHeader() {
-  QClipboard* clipboard = QApplication::clipboard();
+  QClipboard *clipboard = QApplication::clipboard();
   clipboard->setText(ui->fileEditor->toPlainText());
 }
 void MainWindow::selectFiles() {
@@ -386,15 +435,15 @@ void MainWindow::importTemplate() {
 }
 void MainWindow::deleteAllItems() { ui->fileListWidget->clear(); }
 void MainWindow::deleteItem() {
-  QList<QListWidgetItem*> items = ui->fileListWidget->selectedItems();
-  foreach (QListWidgetItem* item, items) {
+  QList<QListWidgetItem *> items = ui->fileListWidget->selectedItems();
+  foreach (QListWidgetItem *item, items) {
     delete ui->fileListWidget->takeItem(ui->fileListWidget->row(item));
   }
   readFileList();
 }
 void MainWindow::clearFileEditor() { ui->fileEditor->clear(); }
 void MainWindow::on_selectButton_clicked() { selectFiles(); }
-void MainWindow::fillFileList(const QStringList& files) {
+void MainWindow::fillFileList(const QStringList &files) {
   foreach (QString f, files) { ui->fileListWidget->addItem(f); }
 }
 void MainWindow::readFileList() {
@@ -416,7 +465,7 @@ void MainWindow::on_fileEditor_textChanged() {
   }
 }
 // Load template header and fill the fileEditor to make changes
-void MainWindow::readTemplate(const QString& path) {
+void MainWindow::readTemplate(const QString &path) {
   QFile file(path);
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
   QTextStream in(&file);
@@ -430,7 +479,7 @@ void MainWindow::readTemplate(const QString& path) {
 /// \brief Sets the conent of the header-editor.
 /// \param header
 ///
-void MainWindow::setHeader(const QString& header) {
+void MainWindow::setHeader(const QString &header) {
   this->header.setContent(header);
   ui->fileEditor->clear();
   ui->fileEditor->setPlainText(this->header.getContent());
@@ -460,7 +509,7 @@ void MainWindow::on_templateComboBox_activated(int index) {
 /// \brief Delete the clicked item.
 /// \param item
 ///
-void MainWindow::on_fileListWidget_itemDoubleClicked(QListWidgetItem* item) {
+void MainWindow::on_fileListWidget_itemDoubleClicked(QListWidgetItem *item) {
   delete item;
 }
 ///
@@ -484,7 +533,7 @@ bool MainWindow::processFiles() {
       QFile file(temp);
       if (!file.open(QIODevice::ReadOnly |
                      QIODevice::Text)) {  // Check if file is write-only
-        status.emplace_back(temp, State::WRITEONLY);
+        status.emplace_back(temp, STATE::WRITEONLY);
         file.close();
         continue;
       }
@@ -494,15 +543,15 @@ bool MainWindow::processFiles() {
       if (!file.open(QIODevice::WriteOnly |
                      QIODevice::Text)) {  // Check if the new file was created
                                           // and opened properly
-        status.emplace_back(temp, State::READONLY);
+        status.emplace_back(temp, STATE::READONLY);
         file.close();
         continue;
       }
       QTextStream out(&file);
       out << commentHeader(header.getContent(), l.second) << "\n\n" << buffer;
-      status.emplace_back(temp, State::GOOD);
+      status.emplace_back(temp, STATE::GOOD);
     } else {
-      status.emplace_back(temp, State::FILEEXTENSION);
+      status.emplace_back(temp, STATE::FILEEXTENSION);
       continue;
     }
   }
@@ -528,7 +577,7 @@ bool MainWindow::processFilesSafeMode() {
       QFile file(temp);
       if (!file.open(QIODevice::ReadOnly |
                      QIODevice::Text)) {  // Check if file is write-only
-        status.emplace_back(temp, State::WRITEONLY);
+        status.emplace_back(temp, STATE::WRITEONLY);
         file.close();
         continue;
       }
@@ -543,21 +592,24 @@ bool MainWindow::processFilesSafeMode() {
                         QIODevice::Text)) {  // Check if the new file was
                                              // created and opened properly
 
-        status.emplace_back(temp, State::READONLY);
+        status.emplace_back(temp, STATE::READONLY);
         file.close();
         continue;
       }
       QTextStream out(&outFile);
       out << commentHeader(header.getContent(), l.second) << "\n\n" << buffer;
-      status.emplace_back(tempOut, State::GOOD);
+      status.emplace_back(tempOut, STATE::GOOD);
     } else {
-      status.emplace_back(temp, State::FILEEXTENSION);
+      status.emplace_back(temp, STATE::FILEEXTENSION);
       continue;
     }
   }
   return true;
 }
 
+///
+/// \brief Delete the first n commented lines of the selected files
+///
 bool MainWindow::deleteHeader(int lineCount) {
   QString temp;
   std::pair<bool, Language::Language> l;
@@ -574,26 +626,88 @@ bool MainWindow::deleteHeader(int lineCount) {
         lc = 0;
         while (!t.atEnd()) {
           QString line = t.readLine();
-          if (!line.startsWith(l.second.getSingleLine().at(0)) || lc >= lineCount) {
+          if (!line.startsWith(l.second.getSingleLine().at(0)) ||
+              lc >= lineCount) {
             str.append(line + "\n");
-          }else{
-              lc++;
-            }
+          } else {
+            lc++;
+          }
         }
         f.resize(0);
         t << str;
         f.close();
-        status.emplace_back(temp, State::GOOD);
+        status.emplace_back(temp, STATE::GOOD);
       } else {
-        status.emplace_back(temp, State::UNKNOWN);
+        status.emplace_back(temp, STATE::UNKNOWN);
       }
     } else {
-      status.emplace_back(temp, State::FILEEXTENSION);
+      status.emplace_back(temp, STATE::FILEEXTENSION);
       continue;
     }
   }
   return true;
 }
+
+///
+/// \brief Delte the first n commented lines of the selected files and save them
+/// to a new folder
+///
+bool MainWindow::deleteHeaderSafeMode(int lineCount) {
+  QString temp;
+  QString tempOut;
+  QString dirName;
+  int lc = 0;
+  std::pair<bool, Language::Language> l;
+  for (int i = 0; i < fileNameList.length(); i++) {
+    temp = currentDirectory.absolutePath() + "/" + fileNameList[i];
+    QFileInfo fi(temp);
+    l = readFileExtension(fi.completeSuffix().toUpper());
+    if (l.first) {
+      QFile file(temp);
+      if (!file.open(QIODevice::ReadOnly |
+                     QIODevice::Text)) {  // Check if file is write-only
+        status.emplace_back(temp, STATE::WRITEONLY);
+        file.close();
+        continue;
+      }
+      QString str;
+      QTextStream f(&file);
+      lc = 0;
+      while (!f.atEnd()) {
+        QString line = f.readLine();
+        if (!line.startsWith(l.second.getSingleLine().at(0)) ||
+            lc >= lineCount) {
+          str.append(line + "\n");
+        } else {
+          lc++;
+        }
+      }
+      file.close();
+      QDir newDir(currentDirectory);
+      dirName = currentDirectory.absolutePath() + "/" + "AutoHeader";
+      newDir.mkdir(dirName);
+      tempOut = dirName + "/" + fileNameList[i];
+      QFile outFile(tempOut);
+      if (!outFile.open(QIODevice::WriteOnly |
+                        QIODevice::Text)) {  // Check if the new file was
+                                             // created and opened properly
+
+        status.emplace_back(temp, STATE::READONLY);
+        file.close();
+        continue;
+      }
+      QTextStream qts(&outFile);
+      qts << str;
+      outFile.close();
+      status.emplace_back(tempOut, STATE::GOOD);
+    } else {
+      status.emplace_back(temp, STATE::FILEEXTENSION);
+      continue;
+    }
+  }
+  return true;
+}
+
 ///
 /// \brief Get the corresponding language of a file-extension.
 /// \param File-extension
@@ -601,7 +715,7 @@ bool MainWindow::deleteHeader(int lineCount) {
 /// extension at all.
 ///
 std::pair<bool, Language::Language> MainWindow::readFileExtension(
-    const QString& suffix) {
+    const QString &suffix) {
   auto count = extensions.count(suffix);
   if (count > 0) {
     auto i = extensions.find(suffix)->second;
@@ -628,7 +742,7 @@ void MainWindow::printResultsToFile() {
       << ","
       << "Status"
       << "\n";
-  for (auto& statu : status) {
+  for (auto &statu : status) {
     out << statu.first << "," << statu.second << "\n";
   }
   file.close();
@@ -655,7 +769,7 @@ void MainWindow::disableUi() { ui->centralWidget->setEnabled(false); }
 /// \param Path to the file to check,
 /// \return Wether the file is a tet file or should be skipped by the program.
 ///
-bool MainWindow::checkMIME(const QString& path) {
+bool MainWindow::checkMIME(const QString &path) {
   QMimeDatabase db;
   QMimeType type = db.mimeTypeForFile(path);
   return type.inherits("text/plain");
@@ -684,10 +798,4 @@ void MainWindow::on_forceSingleLine_stateChanged(int arg1) {
   } else {
     this->header.forceSingleLine = false;
   }
-}
-
-void MainWindow::on_removeLinesButton_clicked() {
-  disableUi();
-  deleteHeader(5);
-  enableUi();
 }
