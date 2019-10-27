@@ -10,6 +10,11 @@ AutoHeader is a tool to add a „license-header“ to your projects. Adding each
 
 [Download the source code](https://github.com/SchnJulian/AutoHeader/archive/master.zip)
 
+<a href="https://github.com/SchnJulian/AutoHeader/releases/download/1.2/AutoHeader.app.zip" rel="Download the latest version">![Download]("https://raw.githubusercontent.com/SchnJulian/AutoHeader/master/Screenshots/logoPrev.png")</a>
+
+<button name="button" onclick="https://autoheader.de">Download latest version</button>
+
+[**Download the latest version (1.2)**](https://github.com/SchnJulian/AutoHeader/releases/download/1.2/AutoHeader.app.zip)
 ## Language support
  * Ada
  * AppleScript
