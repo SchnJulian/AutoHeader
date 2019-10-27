@@ -1,4 +1,16 @@
-# AutoHeader
+
+
+<img src="/Screenshots/logoPrev.png" align="right"
+     title="AutoHeader Icon by Julian Schnabel" width="120" height="120">
+
+
+# Autoheader
+
+
+## Tired of added your source-code header one by one to your projects?
+![How it works](/Screenshots/Howitworks.png)
+
+
 AutoHeader is a tool to add a „license-header“ to your projects. Adding each header individually can be annoying when dealing with large projects, especially when the comment has to be prepended to many files with various programming languages. With AutoHeader you just write your header, select your folder and the program automatically uses the right comment-style for every individual file.
 
 ## Language support
@@ -33,8 +45,4 @@ You can decide if AutoHeader overrides your files with the new version that incl
 
 ## Dark-theme support on MacOS
 
-![DarkthemeVLightTheme](/Screenshots/ScreenshotDarkTheme.png)
-
-## File-extensions
-
-![FILEEXTENSION](/Screenshots/fileExtensions.png)
+![DarkthemeVLightTheme](/Screenshots/Autoheader_Darkmode.png)
