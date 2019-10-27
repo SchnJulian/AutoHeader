@@ -57,7 +57,9 @@ class MainWindow : public QMainWindow {
   void on_safeModeCheckBox_stateChanged(int arg1);
   void on_forceSingleLine_stateChanged(int arg1);
 
- private:
+  void on_removeLinesButton_clicked();
+
+private:
   Ui::MainWindow* ui;
 #pragma region Actions
   QAction* selectFilesAction{};
@@ -95,7 +97,7 @@ class MainWindow : public QMainWindow {
   void warning();
   void enableUi();
   void disableUi();
-
+  bool deleteHeader(int lineCount);
 #pragma endregion auxiliary - functions
   bool safeMode = false;
   QString commentHeader(

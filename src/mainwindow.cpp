@@ -12,9 +12,7 @@ MainWindow::MainWindow(QWidget* parent)
   initExtensions();
   warning();
 }
-MainWindow::~MainWindow() {
-  delete ui;
-}
+MainWindow::~MainWindow() { delete ui; }
 void MainWindow::initComboBox() {
   auto* model =
       qobject_cast<QStandardItemModel*>(ui->templateComboBox->model());
@@ -294,11 +292,11 @@ QString MainWindow::commentHeader(const QString& header,
                                   const Language::Language& language) {
   if (this->header.forceSingleLine) {
     return commentHeaderSingleLine(language);
-  } if (header.count("\n") >= 1 && language.getMultiLine().length() == 2) {
+  }
+  if (header.count("\n") >= 1 && language.getMultiLine().length() == 2) {
     return commentHeaderMultiLine(language);
-  } 
-    return commentHeaderSingleLine(language);
-  
+  }
+  return commentHeaderSingleLine(language);
 }
 
 QString MainWindow::commentHeaderSingleLine(
@@ -329,8 +327,7 @@ QString MainWindow::commentHeaderMultiLine(const Language::Language& language) {
 void MainWindow::saveToFile() {
   QString fileName = QFileDialog::getSaveFileName(
       this, tr("Save Header"), "", tr("Text file(*.txt);;All Files (*)"));
-  if (fileName.isEmpty())
-    return;
+  if (fileName.isEmpty()) return;
   QFile file(fileName);
   if (!file.open(QIODevice::WriteOnly)) {
     QMessageBox::information(this, tr("Unable to open file"),
@@ -387,9 +384,7 @@ void MainWindow::importTemplate() {
       this, tr("Open template"), "/home", tr("Text Files (*.txt *.rtf)"));
   readTemplate(fileName);
 }
-void MainWindow::deleteAllItems() {
-  ui->fileListWidget->clear();
-}
+void MainWindow::deleteAllItems() { ui->fileListWidget->clear(); }
 void MainWindow::deleteItem() {
   QList<QListWidgetItem*> items = ui->fileListWidget->selectedItems();
   foreach (QListWidgetItem* item, items) {
@@ -397,12 +392,8 @@ void MainWindow::deleteItem() {
   }
   readFileList();
 }
-void MainWindow::clearFileEditor() {
-  ui->fileEditor->clear();
-}
-void MainWindow::on_selectButton_clicked() {
-  selectFiles();
-}
+void MainWindow::clearFileEditor() { ui->fileEditor->clear(); }
+void MainWindow::on_selectButton_clicked() { selectFiles(); }
 void MainWindow::fillFileList(const QStringList& files) {
   foreach (QString f, files) { ui->fileListWidget->addItem(f); }
 }
@@ -427,8 +418,7 @@ void MainWindow::on_fileEditor_textChanged() {
 // Load template header and fill the fileEditor to make changes
 void MainWindow::readTemplate(const QString& path) {
   QFile file(path);
-  if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    return;
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
   QTextStream in(&file);
   ui->fileEditor->clear();
   while (!in.atEnd()) {
@@ -476,9 +466,7 @@ void MainWindow::on_fileListWidget_itemDoubleClicked(QListWidgetItem* item) {
 ///
 /// \brief Refresh the file-list.
 ///
-void MainWindow::on_fileListWidget_itemSelectionChanged() {
-  readFileList();
-}
+void MainWindow::on_fileListWidget_itemSelectionChanged() { readFileList(); }
 ///
 /// \brief Prepend the header and save the new files
 /// First the files are checked for compatibility. Then the current content of
@@ -512,7 +500,6 @@ bool MainWindow::processFiles() {
       }
       QTextStream out(&file);
       out << commentHeader(header.getContent(), l.second) << "\n\n" << buffer;
-
       status.emplace_back(temp, State::GOOD);
     } else {
       status.emplace_back(temp, State::FILEEXTENSION);
@@ -571,6 +558,42 @@ bool MainWindow::processFilesSafeMode() {
   return true;
 }
 
+bool MainWindow::deleteHeader(int lineCount) {
+  QString temp;
+  std::pair<bool, Language::Language> l;
+  int lc = 0;
+  for (int i = 0; i < fileNameList.length(); i++) {
+    temp = currentDirectory.absolutePath() + "/" + fileNameList[i];
+    QFileInfo fi(temp);
+    l = readFileExtension(fi.completeSuffix().toUpper());
+    if (l.first) {
+      QFile f(temp);
+      if (f.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QString str;
+        QTextStream t(&f);
+        lc = 0;
+        while (!t.atEnd()) {
+          QString line = t.readLine();
+          if (!line.startsWith(l.second.getSingleLine().at(0)) || lc >= lineCount) {
+            str.append(line + "\n");
+          }else{
+              lc++;
+            }
+        }
+        f.resize(0);
+        t << str;
+        f.close();
+        status.emplace_back(temp, State::GOOD);
+      } else {
+        status.emplace_back(temp, State::UNKNOWN);
+      }
+    } else {
+      status.emplace_back(temp, State::FILEEXTENSION);
+      continue;
+    }
+  }
+  return true;
+}
 ///
 /// \brief Get the corresponding language of a file-extension.
 /// \param File-extension
@@ -618,17 +641,14 @@ void MainWindow::on_startButton_clicked() {
 
   printResultsToFile();
   QMessageBox msgBox;
-  msgBox.setText("Process finished! Check \"results.csv\" for further information.");
+  msgBox.setText(
+      "Process finished! Check \"results.csv\" for further information.");
   msgBox.exec();
   enableUi();
 }
 
-void MainWindow::enableUi() {
-  ui->centralWidget->setEnabled(true);
-}
-void MainWindow::disableUi() {
-  ui->centralWidget->setEnabled(false);
-}
+void MainWindow::enableUi() { ui->centralWidget->setEnabled(true); }
+void MainWindow::disableUi() { ui->centralWidget->setEnabled(false); }
 
 ///
 /// \brief Check MIME-type
@@ -664,4 +684,10 @@ void MainWindow::on_forceSingleLine_stateChanged(int arg1) {
   } else {
     this->header.forceSingleLine = false;
   }
+}
+
+void MainWindow::on_removeLinesButton_clicked() {
+  disableUi();
+  deleteHeader(5);
+  enableUi();
 }
