@@ -8,13 +8,12 @@
 
 AutoHeader is a tool to add a „license-header“ to your projects. Adding each header individually can be annoying when dealing with large projects, especially when the comment has to be prepended to many files with various programming languages. With AutoHeader you just write your header, select your folder and the program automatically uses the right comment-style for every individual file.
 
-[Download the source code](https://github.com/SchnJulian/AutoHeader/archive/master.zip)
-
-<a href="https://github.com/SchnJulian/AutoHeader/releases/download/1.2/AutoHeader.app.zip" rel="Download the latest version">![Download]("https://raw.githubusercontent.com/SchnJulian/AutoHeader/master/Screenshots/logoPrev.png")</a>
-
-<button name="button" onclick="https://autoheader.de">Download latest version</button>
+## Download
 
 [**Download the latest version (1.2)**](https://github.com/SchnJulian/AutoHeader/releases/download/1.2/AutoHeader.app.zip)
+
+[Download the source code](https://github.com/SchnJulian/AutoHeader/archive/master.zip)
+
 ## Language support
  * Ada
  * AppleScript
