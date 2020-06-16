@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
   initComboBox();
   initLanguages();
   initExtensions();
-  warning();
+  //warning();
 }
 MainWindow::~MainWindow() { delete ui; }
 void MainWindow::initComboBox() {
